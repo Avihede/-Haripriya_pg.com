@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Haripriya PG — Modern PG by Bharat Rao</title>
+  <meta name="description" content="Haripriya PG offers clean rooms, hygienic washrooms, neat kitchen, and friendly management by owner Mr. Bharat Rao. Book a visit today!" />
+  <style>
+    /* =========================================================
+       H A R I P R I Y A   P G  —  Single File Website
+       - Fresh visual look (different from previous design)
+       - CSS variables for easy theming
+       - Photo & Video tabs, dedicated Washrooms + Kitchen sections
+       - Owner info, pricing, FAQ, contact, and map placeholder
+       - Running marquee banner with PG name
+       ========================================================= */
+
+    :root{
+      --bg:#0b132b;        /* deep navy */
+      --bg2:#1c2541;       /* slate navy */
+      --card:#162037;      /* card surface */
+      --ink:#e6edf6;       /* primary text */
+      --muted:#a7b3c7;     /* secondary text */
+      --brand:#ef476f;     /* coral */
+      --brand2:#ffd166;    /* amber */
+      --accent:#06d6a0;    /* teal */
+      --info:#118ab2;      /* blue */
+      --ring: 0 0 0 3px rgba(239,71,111,.25);
+      --radius: 18px;
+      --shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font:16px/1.65 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 400px at 15% -5%, rgba(17,138,178,.18), transparent 60%),
+        radial-gradient(1200px 600px at 100% 0%, rgba(239,71,111,.16), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      color:var(--ink);
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    .section{padding:96px 0}
+    .title{font-size:clamp(28px,4.6vw,46px);font-weight:900;letter-spacing:.2px;margin-bottom:10px}
+    .subtitle{color:var(--muted);margin-bottom:24px}
+    .pill{display:inline-block;padding:6px 12px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.06);font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:#dfe7f7}
+
+    /* ===================== NAV + HEADER ===================== */
+    header{position:sticky;top:0;z-index:60;background:rgba(11,19,43,.7);backdrop-filter: blur(10px) saturate(140%);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+    .brand-logo{width:38px;height:38px;border-radius:12px;background:conic-gradient(from 180deg, var(--brand), var(--brand2), var(--accent), var(--brand));box-shadow:0 6px 18px rgba(239,71,111,.35)}
+    .brand h1{font-size:18px;letter-spacing:.4px}
+    .menu{display:flex;gap:16px;align-items:center}
+    .menu a{padding:8px 10px;border-radius:10px;color:var(--muted)}
+    .menu a:hover{background:rgba(255,255,255,.08);color:var(--ink)}
+    .cta{padding:10px 14px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--accent));color:#0b1120;border:none;font-weight:800;cursor:pointer;box-shadow:var(--shadow)}
+    .hamburger{display:none}
+
+    /* marquee strip */
+    .marquee{position:relative;overflow:hidden;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(90deg, rgba(239,71,111,.15), rgba(6,214,160,.15));}
+    .marquee .track{display:inline-block;white-space:nowrap;animation:scroll 14s linear infinite;font-weight:900;letter-spacing:1px;padding:8px 0}
+    .marquee .track span{margin:0 16px}
+    @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    @media (max-width:900px){
+      .menu{display:none}
+      .hamburger{display:block;background:none;border:1px solid rgba(255,255,255,.15);width:44px;height:44px;border-radius:12px;color:var(--ink);font-size:22px}
+      .mobile{position:fixed;inset:66px 16px auto 16px;background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:16px;display:none;flex-direction:column;padding:14px}
+      .mobile a{padding:12px;border-radius:10px;color:var(--muted)}
+      .mobile a:hover{background:rgba(255,255,255,.07);color:var(--ink)}
+    }
+
+    /* ======================== HERO ========================= */
+    .hero{position:relative;overflow:hidden}
+    .hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:28px}
+    .hero h2{font-size:clamp(36px,6.5vw,68px);line-height:1.04;margin:8px 0}
+    .hero p{color:var(--muted);max-width:620px}
+    .hero-cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:var(--ink);font-weight:700;cursor:pointer}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--accent));color:#091224;border:none}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+    .stat{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;text-align:center}
+    .stat b{font-size:28px}
+    .hero-art{position:relative}
+    .hero-img{border-radius:22px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08)}
+    .badge{position:absolute;right:-8px;bottom:-10px;background:linear-gradient(135deg,var(--brand2),#fff);color:#2b2b2b;padding:12px 14px;border-radius:14px;border:3px solid #0b132b;font-weight:900;transform:rotate(-2deg)}
+
+    @media(max-width:900px){
+      .hero-wrap{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(3,1fr)}
+    }
+
+    /* =============== FEATURE CARDS (Rooms/Wash/Kitchen) =============== */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);transition:transform .3s ease}
+    .card:hover{transform:translateY(-6px)}
+    .card img{height:210px;width:100%;object-fit:cover}
+    .card .pad{padding:16px}
+    .chip{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);font-size:12px;color:var(--muted)}
+    @media(max-width:900px){.features{grid-template-columns:1fr}}
+
+    /* ===================== ROOMS ===================== */
+    .rooms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .room{display:flex;flex-direction:column}
+    .room .thumb{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}
+    .room .meta{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
+    .price{font-weight:900;color:#c4fce6}
+    .badge-sm{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);font-size:12px;color:var(--muted);display:inline-block;margin-right:6px}
+    @media(max-width:900px){.rooms-grid{grid-template-columns:1fr}}
+
+    /* ===================== WASHROOMS & KITCHEN ===================== */
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .panel{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:20px}
+    .list{display:grid;gap:8px;margin-top:10px}
+    .list li{list-style:none;display:flex;gap:10px;align-items:flex-start}
+    .tick{width:18px;height:18px;flex:0 0 18px;background:linear-gradient(135deg,var(--accent),#90f7d8);border-radius:6px;display:grid;place-items:center}
+
+    @media(max-width:900px){.split{grid-template-columns:1fr}}
+
+    /* ===================== AMENITIES ===================== */
+    .amen-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+    .amen{background:var(--card);border:1px solid rgba(255,255,255,.08);padding:16px;border-radius:14px;text-align:center}
+    .amen svg{width:28px;height:28px;margin:6px auto 8px;display:block}
+    .amen small{color:var(--muted)}
+    @media(max-width:1100px){.amen-grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:600px){.amen-grid{grid-template-columns:repeat(2,1fr)}}
+
+    /* ===================== MEDIA TABS (PHOTOS / VIDEOS) ===================== */
+    .tabs{display:flex;gap:10px;margin:10px 0 18px}
+    .tab{padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);cursor:pointer}
+    .tab.active{background:linear-gradient(135deg,var(--brand),var(--accent));color:#0b1120;border:none}
+    .media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .shot{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}
+    .shot video{width:100%;height:100%;display:block}
+    @media(max-width:900px){.media-grid{grid-template-columns:1fr}}
+
+    /* ===================== PRICING ===================== */
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .plan{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;position:relative}
+    .plan.best{outline:2px solid var(--accent);transform:scale(1.01)}
+    .plan .rupee{font-size:32px;font-weight:900}
+    .plan ul{margin:10px 0 16px;display:grid;gap:8px}
+    .plan li{list-style:none;color:var(--muted)}
+    .plan button{width:100%}
+    @media(max-width:900px){.pricing{grid-template-columns:1fr}}
+
+    /* ===================== OWNER ===================== */
+    .owner{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
+    .owner .carder{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px}
+    .owner .avatar{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+    .owner .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .owner .item{background:rgba(255,255,255,.05);padding:12px;border-radius:12px}
+    @media(max-width:900px){.owner{grid-template-columns:1fr}}
+
+    /* ===================== FAQ & CONTACT ===================== */
+    .faq{max-width:900px;margin:0 auto;display:grid;gap:12px}
+    details{background:var(--card);border:1px solid rgba(255,255,255,.1);padding:14px 16px;border-radius:12px}
+    summary{cursor:pointer;font-weight:700}
+    details p{color:var(--muted);margin-top:8px}
+    form{display:grid;gap:12px}
+    input, textarea, select{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:12px;border-radius:12px;color:var(--ink)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media(max-width:700px){.grid-2{grid-template-columns:1fr}}
+
+    /* ===================== FOOTER & FLOATERS ===================== */
+    footer{padding:30px 0;border-top:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
+    .foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)}
+    .float-cta{position:fixed;right:18px;bottom:18px;display:grid;gap:10px;z-index:60}
+    .fab{border:none;border-radius:999px;padding:14px;box-shadow:var(--shadow);cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--accent));color:#061229}
+    .fab.secondary{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid rgba(255,255,255,.1)}
+
+    /* ===================== MODAL ===================== */
+    .modal{position:fixed;inset:0;background:rgba(3,10,24,.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:80}
+    .dialog{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:16px;max-width:560px;width:100%;padding:20px}
+
+    /* ===================== REVEAL ===================== */
+    .reveal{opacity:0;transform:translateY(16px);transition:all .6s ease}
+    .reveal.in{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <!-- ===================== NAV ===================== -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true"></div>
+        <h1>Haripriya PG</h1>
+      </div>
+      <nav class="menu" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#washrooms">Washrooms</a>
+        <a href="#kitchen">Kitchen</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#media">Photos & Videos</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#owner">Owner</a>
+        <a href="#location">Location</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="hamburger" aria-label="Open menu" id="hamburger">☰</button>
+      <button class="cta" id="bookTop">Book Now</button>
+    </div>
+    <!-- Running marquee with PG name -->
+    <div class="marquee" aria-label="Scrolling haripriya pg text">
+      <div class="track">
+        <span>🏠 Haripriya PG • Modern, Safe & Stylish Living • Managed by Mr. Bharat Rao</span>
+        <span>🏠 Haripriya PG • Modern, Safe & Stylish Living • Managed by Mr. Bharat Rao</span>
+        <span>🏠 Haripriya PG • Modern, Safe & Stylish Living • Managed by Mr. Bharat Rao</span>
+        <span>🏠 Haripriya PG • Modern, Safe & Stylish Living • Managed by Mr. Bharat Rao</span>
+      </div>
+    </div>
+    <div class="mobile container" id="mobileMenu">
+      <a href="#home">Home</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#washrooms">Washrooms</a>
+      <a href="#kitchen">Kitchen</a>
+      <a href="#amenities">Amenities</a>
+      <a href="#media">Photos & Videos</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#owner">Owner</a>
+      <a href="#location">Location</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero section" id="home">
+    <div class="container hero-wrap">
+      <div>
+        <span class="pill">Welcome • Since 2014</span>
+        <h2 class="reveal">Haripriya (Boys) PG — Feel at Home</h2>
+        <p class="reveal" style="transition-delay:.1s">Stay in thoughtfully designed rooms with fast Wi‑Fi, tasty meals, daily housekeeping, laundry, CCTV, and 24×7 support. Perfect for students & working professionals.</p>
+        <div class="hero-cta reveal" style="transition-delay:.2s">
+          <button class="btn primary" id="bookHero">Book a Visit</button>
+          <a class="btn" href="#pricing">View Pricing</a>
+          <a class="btn" href="#amenities">See Amenities</a>
+        </div>
+        <div class="stats reveal" style="transition-delay:.3s">
+          <div class="stat"><b>150+</b><div>Happy Residents</div></div>
+          <div class="stat"><b>7</b><div>Room Types</div></div>
+          <div class="stat"><b>24/7</b><div>Security & Power</div></div>
+        </div>
+      </div>
+      <div class="hero-art reveal" style="transition-delay:.25s">
+        <div class="hero-img">
+          <img src="pg1.png" alt="Modern PG room" />
+        </div>
+        <div class="badge">Prime Location • Walkable</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURE CARDS ===================== -->
+  <section class="section">
+    <div class="container">
+      <div class="features">
+        <article class="card reveal">
+          <img src="Balcony.jpg" alt="Private room" />
+          <div class="pad">
+            <h3>Private Rooms</h3>
+            <p class="subtitle">Balcony with sunlight, ergonomic study desk & storage.</p>
+            <span class="chip">Single • Deluxe • AC</span>
+          </div>
+        </article>
+        <article class="card reveal" style="transition-delay:.08s">
+          <img src="Washrroms.jpg" height="900" alt="Washroom" />
+          <div class="pad">
+            <h3>Hygienic Washrooms</h3>
+            <p class="subtitle">Daily cleaning, geysers, anti‑skid tiles, premium fittings.</p>
+            <span class="chip">Shared & Attached</span>
+          </div>
+        </article>
+        <article class="card reveal" style="transition-delay:.16s">
+          <img src="K.jpg" alt="Kitchen" />
+          <div class="pad">
+            <h3>Neat Kitchen</h3>
+            <p class="subtitle">RO water, chimney, induction, microwave, managed dining.</p>
+            <span class="chip">Veg/Non‑Veg Options</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ROOMS ===================== -->
+  <section class="section" id="rooms">
+    <div class="container">
+      <h3 class="title">Rooms & Tariffs</h3>
+      <p class="subtitle">Choose from single, double, triple sharing and Four Sharing And. Zero brokerage, transparent pricing.</p>
+      <div class="rooms-grid">
+        <div class="room reveal">
+          <div class="thumb"><img src="gen.jpg" width="400" alt="Single room"/></div>
+          <div class="meta"><span>Five Sharing</span><span class="price">₹6,000 / mo</span></div>
+          <div>
+            <span class="badge-sm">Balcony</span>
+            <span class="badge-sm">Study Desk</span>
+            <span class="badge-sm">Wardrobe</span>
+          </div>
+        </div>
+        <div class="room reveal" style="transition-delay:.06s">
+          <div class="thumb"><img src="R4.jpg" alt="Double room"/></div>
+          <div class="meta"><span>Triple Sharing</span><span class="price">₹6,000 / mo</span></div>
+          <div>
+            <span class="badge-sm">Balcony</span>
+            <span class="badge-sm">Housekeeping</span>
+            <span class="badge-sm">Laundry</span>
+          </div>
+        </div>
+        <div class="room reveal" style="transition-delay:.12s">
+          <div class="thumb"><img src="R2.jpg" alt="Triple room"/></div>
+          <div class="meta"><span>Double Sharing</span><span class="price">₹6,000 / mo</span></div>
+          <div>
+            <span class="badge-sm">High‑speed Wi‑Fi</span>
+            <span class="badge-sm">Meals</span>
+            <span class="badge-sm">24×7 Power</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WASHROOMS ===================== -->
+  <section class="section" id="washrooms">
+    <div class="container">
+      <h3 class="title">Washrooms — Clean & Sanitized</h3>
+      <p class="subtitle">Strict hygiene standards with deep cleaning schedules and periodic fumigation.</p>
+      <div class="split">
+        <div class="panel reveal">
+          <h4>Fixtures & Safety</h4>
+          <ul class="list">
+            <li><span class="tick">✅</span><span>Wall‑mounted WC with health faucet and soft‑close seat.</span></li>
+            <li><span class="tick">✅</span><span>Geysers with temperature guard and ELCB safety switches.</span></li>
+            <li><span class="tick">✅</span><span>Anti‑skid tiles, grab bars, dry‑wet separation.</span></li>
+            <li><span class="tick">✅</span><span>Premium fittings (Jaquar/Equivalent), large mirrors & shelves.</span></li>
+          </ul>
+        </div>
+        <div class="panel reveal" style="transition-delay:.08s">
+          <h4>Hygiene Protocol</h4>
+          <ul class="list">
+            <li><span class="tick">✅</span><span>Daily mopping and surface disinfection.</span></li>
+            <li><span class="tick">✅</span><span>Weekend deep clean with steam & descaling.</span></li>
+            <li><span class="tick">✅</span><span>Dedicated exhaust & cross‑ventilation.</span></li>
+            <li><span class="tick">✅</span><span>Periodic pest control and air fresheners.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== KITCHEN ===================== -->
+  <section class="section" id="kitchen">
+    <div class="container">
+      <h3 class="title">Kitchen & Dining — Nutritious & Neat</h3>
+      <p class="subtitle">Managed kitchen with monitored hygiene and flexible meal plans.</p>
+      <div class="split">
+        <div class="panel reveal">
+          <h4>Appliances</h4>
+          <ul class="list">
+            <li><span class="tick">✅</span><span>RO water, fridge, microwave, induction stoves & toaster.</span></li>
+            <li><span class="tick">✅</span><span>Commercial chimney, fire‑safety equipment & first‑aid box.</span></li>
+            <li><span class="tick">✅</span><span>Separate veg/non‑veg zones, labelled containers.</span></li>
+          </ul>
+        </div>
+        <div class="panel reveal" style="transition-delay:.08s">
+          <h4>Meals & Timings</h4>
+          <ul class="list">
+            <li><span class="tick">✅</span><span>Breakfast, lunch, dinner plans with Sunday specials.</span></li>
+            <li><span class="tick">✅</span><span>Customizable spice & oil preferences on request.</span></li>
+            <li><span class="tick">✅</span><span>Dining area with CCTV & cleanliness checklist display.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AMENITIES ===================== -->
+  <section class="section" id="amenities">
+    <div class="container">
+      <h3 class="title">Amenities That Matter</h3>
+      <p class="subtitle">We focus on what improves your everyday life.</p>
+      <div class="amen-grid">
+        <div class="amen reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M4 12h16M4 17h16"/></svg><div>High‑speed Wi‑Fi</div><small>Up to 200 Mbps</small></div>
+        <div class="amen reveal" style="transition-delay:.02s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><div>Power Backup</div><small>24×7 UPS</small></div>
+        <div class="amen reveal" style="transition-delay:.04s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18v12H3z"/><path d="M7 6v12M17 6v12"/></svg><div>Laundry</div><small>Weekly</small></div>
+        <div class="amen reveal" style="transition-delay:.06s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M4 12a8 8 0 0116 0"/></svg><div>CCTV</div><small>Common areas</small></div>
+        <div class="amen reveal" style="transition-delay:.08s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12h20M12 2v20"/></svg><div>Terres</div><small>Accessible</small></div>
+        <div class="amen reveal" style="transition-delay:.1s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg><div>Near Colleges/Companies</div><small>Walkable</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MEDIA (PHOTOS & VIDEOS) ===================== -->
+  <section class="section" id="media">
+    <div class="container">
+      <h3 class="title">Photos & Videos</h3>
+      <p class="subtitle">Upload your own photos and 3–4 videos to showcase rooms, kitchen, washrooms, and testimonials.</p>
+      <div class="tabs">
+        <button class="tab active" data-tab="photos">Photos</button>
+        <button class="tab" data-tab="videos">Videos</button>
+      </div>
+
+      <!-- Photos Grid -->
+      <div class="media-grid" id="photosGrid">
+        <div class="shot reveal"><img src="hp.pg.jpg" height="550"     "Room"/></div>
+        <div class="shot reveal"><img src="Terris.jpg" height="550"  alt="Dining"/></div>
+        <div class="shot reveal"><img src="room.jpg" height="550" alt="Washroom"/></div>
+        <div class="shot reveal"><img src="Washrroms.jpg" height="550" alt="Study"/></div>
+        <div class="shot reveal"><img src="Balcony.jpg" height="550" alt="Kitchen"/></div>
+        <div class="shot reveal"><img src="extra.jpg" height="550" alt="Lobby"/></div>
+      </div>
+
+      <!-- Videos Grid (Replace sources with your uploads) -->
+      <div class="media-grid" id="videosGrid" style="display:none">
+        <div class="shot reveal">
+          <video controls poster="p1.jpg">
+            <source src="front.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="shot reveal">
+          <video controls poster="p2.jpg">
+            <source src="v2.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="shot reveal">
+          <video controls poster="Terris.jpg">
+            <source src="tv.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="shot reveal">
+          <video controls poster="Balcony.jpg">
+            <source src="last.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <h3 class="title">Simple, Transparent Pricing</h3>
+      <p class="subtitle">One month refundable deposit. Electricity as per meter for AC rooms.</p>
+      <div class="pricing">
+        <div class="plan reveal">
+          <h3>Compact</h3>
+          <div class="rupee">₹6,000 / month</div>
+          <ul>
+            <li>Triple Sharing</li>
+            <li>Wi‑Fi, Housekeeping</li>
+            <li>Common Washroom</li>
+          </ul>
+          <button class="btn" data-plan="Compact">Enquire</button>
+        </div>
+        <div class="plan best reveal" style="transition-delay:.06s">
+          <h3>Comfort</h3>
+          <div class="rupee">₹6,000 / month</div>
+          <ul>
+            <li>Double Sharing</li>
+            <li>Meals Included</li>
+            <li>Attached Washroom</li>
+          </ul>
+          <button class="btn primary" data-plan="Comfort">Book Now</button>
+        </div>
+        <div class="plan reveal" style="transition-delay:.12s">
+          <h3>Premium</h3>
+          <div class="rupee">₹6,000 / month</div>
+          <ul>
+            <li>Five Sharing Room</li>
+            <li>Balcony + Study Desk</li>
+            <li>Laundry + Meals</li>
+          </ul>
+          <button class="btn" data-plan="Premium">Request Call</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OWNER ===================== -->
+  <section class="section" id="owner">
+    <div class="container owner">
+      <div class="avatar reveal">
+        <img src="owner.jpg" width="500" alt="Owner portrait placeholder" />
+      </div>
+      <div class="carder reveal" style="transition-delay:.08s">
+        <span class="pill">Owner</span>
+        <h3 class="title" style="margin-top:10px">Mr. Bharath.S.Bellary</h3>
+        <p class="subtitle">Founder & Manager of Haripriya PG. 10+ years of experience running safe, student‑friendly accommodations with a focus on cleanliness and transparent policies.</p>
+        <div class="grid">
+          <div class="item"><b>Phone</b><div><a href="tel:+919880600825">+91 9880600825</a></div></div>
+          <div class="item"><b>WhatsApp</b><div><a href="https://wa.me/919880600825" target="_blank" rel="noopener">Chat on WhatsApp</a></div></div>
+          <div class="item"><b>Email</b><div><a href="bharathbellary.com">avihede@gmail.com</a></div></div>
+          <div class="item"><b>Visiting Hours</b><div>Daily: 9:30 AM – 7:30 PM</div></div>
+          <div class="item"><b>License No.</b><div>PG/HRP/2025/0421</div></div>
+          <div class="item"><b>GST</b><div>27ABCDE1234F1Z5</div></div>
+        </div>
+        <div class="hero-cta" style="margin-top:14px">
+          <button class="btn primary" id="callOwner">Call Now</button>
+          <a class="btn" href="#location">Get Directions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== LOCATION ===================== -->
+  <section class="section" id="location">
+    <div class="container">
+      <h3 class="title">Find Us</h3>
+    <!--  <p class="subtitle">Paste your exact Google Maps link below (replace the src). Tip: open Google Maps → Share → Embed a map → Copy HTML.</p> -->
+      <div class="reveal" style="border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1)">
+        <!-- Replace q with the exact address or paste your embed code -->
+        <iframe src="https://www.google.com/maps/embed?pb=!4v1756101498849!6m8!1m7!1sZj4yAh9orb54MusC4o263Q!2m2!1d15.36849920295544!2d75.15726308019403!3f201.76!4f0!5f0.7820865974627469" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h3 class="title">FAQ</h3>
+      <div class="faq">
+        <details class="reveal" open>
+          <summary>Is the security deposit refundable?</summary>
+          <p>Yes. One month deposit is fully refundable within 7 working days after checkout, subject to no damages or dues.</p>
+        </details>
+        <details class="reveal" style="transition-delay:.06s">
+          <summary>Are guests allowed?</summary>
+          <p>Daytime guests are allowed in common areas. Overnight stays require prior approval.</p>
+        </details>
+        <details class="reveal" style="transition-delay:.12s">
+          <summary>What documents are needed?</summary>
+          <p>Aadhar/Passport, recent photo, and college/company ID. Police verification facilitated if required.</p>
+        </details>
+        <details class="reveal" style="transition-delay:.18s">
+          <summary>Do you have curfew?</summary>
+          <p>Curfew is 10:30 PM for security. Late entries can be pre‑notified over WhatsApp.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h3 class="title">Book a Visit</h3>
+      <p class="subtitle">⚠️ Note: This website does not contain a backend.  
+After submitting your details, please call the owner directly at .</p>
+      <form id="contactForm" novalidate>
+        <div class="grid-2">
+          <div>
+            <label for="name">Full Name</label>
+            <input id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" placeholder="10‑digit mobile" required pattern="^[0-9]{10}$" />
+          </div>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div>
+            <label for="room">Room Type</label>
+            <select id="room" name="room">
+              <option>Double Sharing</option>
+              <option>Triple Sharing</option>
+              <option>Single AC</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="date">Preferred Visit Date</label>
+          <input id="date" name="date" type="date" />
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Any specific needs?"></textarea>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button class="btn primary" type="submit">Submit</button>
+          <button class="btn" type="reset">Reset</button>
+        </div>
+        <small class="subtitle">By submitting, you agree to our friendly <a href="#">terms</a>. We will never spam you.</small>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container foot">
+      <div>© <span id="year"></span> Haripriya PG • All rights reserved</div>
+      <div>Designed by Avi Hede • <a href="#home">Back to top</a></div>
+    </div>
+  </footer>
+
+  <!-- ===================== FLOATERS + MODAL ===================== -->
+  <div class="float-cta">
+    <button class="fab" id="fabBook" title="Book a visit">Book</button>
+    <button class="fab secondary" id="fabTop" title="Back to top">↑</button>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="dialog">
+      <h3 class="title">Quick Enquiry</h3>
+      <p class="subtitle">Leave your number—our team will call you shortly.</p>
+      <form id="quickForm">
+        <div class="grid-2">
+          <input placeholder="Your Name" id="qname" required />
+          <input placeholder="Phone (10‑digit)" id="qphone" required pattern="^[0-9]{10}$" />
+        </div>
+        <div style="display:flex;gap:10px;margin-top:10px">
+          <button class="btn primary" type="submit">Request Call</button>
+          <button class="btn" type="button" id="closeModal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Helpers
+    const qs = (s, el=document) => el.querySelector(s);
+    const qsa = (s, el=document) => [...el.querySelectorAll(s)];
+
+    // Year
+    qs('#year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const ham = qs('#hamburger');
+    const mob = qs('#mobileMenu');
+    ham?.addEventListener('click', ()=>{ mob.style.display = mob.style.display === 'flex' ? 'none' : 'flex'; });
+    qsa('.mobile a').forEach(a=>a.addEventListener('click',()=> mob.style.display='none'));
+
+    // Floating buttons
+    qs('#fabTop').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+    const openModal = () => qs('#modal').style.display='flex';
+    const closeModal = () => qs('#modal').style.display='none';
+    qs('#fabBook').addEventListener('click', openModal);
+    qs('#bookHero').addEventListener('click', openModal);
+    qs('#bookTop').addEventListener('click', openModal);
+    qs('#closeModal').addEventListener('click', closeModal);
+    qs('#modal').addEventListener('click', (e)=>{ if(e.target.id==='modal') closeModal(); });
+
+    // Pricing prefill
+    qsa('.plan button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        openModal();
+        const plan = btn.getAttribute('data-plan');
+        if(plan){ qs('#qname').value = plan + ' — '; qs('#qphone').focus(); }
+      });
+    });
+
+    // Validation
+    const isPhone10 = v => /^[0-9]{10}$/.test(v.trim());
+    const isEmail = v => /.+@.+\..+/.test(v.trim());
+
+    // Contact form
+    qs('#contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = qs('#name').value.trim();
+      const phone = qs('#phone').value.trim();
+      const email = qs('#email').value.trim();
+      if(!name || !isPhone10(phone) || !isEmail(email)){
+        alert('Please fill valid Name, 10‑digit Phone and Email.');
+        return;
+      }
+      alert('Thanks, '+name+'! Our team will contact you soon.');
+      e.target.reset();
+    });
+
+    // Quick form
+    qs('#quickForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const ph = qs('#qphone').value.trim();
+      if(!isPhone10(ph)) return alert('Enter a valid 10‑digit phone.');
+      alert('Request received! We will call you shortly.');
+      closeModal();
+      e.target.reset();
+    });
+
+    // Owner call
+    qs('#callOwner').addEventListener('click', ()=>{ window.location.href = 'tel:+919876543210'; });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.12});
+    qsa('.reveal').forEach(el=> io.observe(el));
+
+    // Tabs logic for media
+    const photosBtn = qsa('.tab')[0];
+    const videosBtn = qsa('.tab')[1];
+    const photosGrid = qs('#photosGrid');
+    const videosGrid = qs('#videosGrid');
+    const setTab = (which)=>{
+      if(which==='photos'){
+        photosBtn.classList.add('active');
+        videosBtn.classList.remove('active');
+        photosGrid.style.display='grid';
+        videosGrid.style.display='none';
+      } else {
+        videosBtn.classList.add('active');
+        photosBtn.classList.remove('active');
+        photosGrid.style.display='none';
+        videosGrid.style.display='grid';
+      }
+      window.location.hash = 'media';
+    }
+    photosBtn.addEventListener('click', ()=> setTab('photos'));
+    videosBtn.addEventListener('click', ()=> setTab('videos'));
+
+    // Accessibility helpers
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape'){
+        closeModal();
+        mob.style.display='none';
+      }
+    });
+
+    // Smooth offset anchors
+    qsa('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(id.length>1){
+          e.preventDefault();
+          const el = qs(id);
+          if(el){
+            const top = el.getBoundingClientRect().top + window.pageYOffset - 72;
+            window.scrollTo({top, behavior:'smooth'});
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
